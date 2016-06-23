@@ -2,10 +2,10 @@
 <template
         format="5"
         revision="5"
-        name="Mvp Activity"
+        name="Swipe Refresh Activity"
         minApi="7"
         minBuildApi="14"
-        description="Creates a new mvp activity that can refresh and loadmore ">
+        description="Creates a new mvp activity that can refresh and load more ">
 
     <category value="Activity"/>
     <formfactor value="Mobile"/>
@@ -36,18 +36,39 @@
             help="If true, this activity will have a CATEGORY_LAUNCHER intent filter, making it visible in the launcher"/>
 
     <parameter
-            id="canRefresh"
-            name="With Refresh Layout"
-            type="boolean"
-            default="false"
-            help="If true, this activity will have a SwipeRefreshLayout"/>
-
-    <parameter
             id="packageName"
             name="Package name"
             type="string"
             constraints="package"
             default="com.xg.mvp"/>
+
+    <!-- SwipeRefreshLayout -->
+    <parameter
+            id="listItemLayout"
+            name="Layout Name"
+            type="string"
+            constraints="layout|unique|nonempty"
+            suggest="listitem_${activityToLayout(activityClass)}"
+            default="listitem_mvp"
+            help="The name of the layout to create for the SwipeRefreshLayout"/>
+
+    <parameter
+            id="adapterClass"
+            name="Adapter Name"
+            type="string"
+            constraints="class|unique|nonempty"
+            suggest="${underscoreToCamelCase(classToResource(activityClass))}Adapter"
+            default="MvpAdapter"
+            help="The name of the SwipeRefreshLayout adapter"/>
+
+    <parameter
+            id="beanClass"
+            name="Refresh Layout Bean Name"
+            type="string"
+            constraints="class|unique|nonempty"
+            suggest="${underscoreToCamelCase(classToResource(activityClass))}"
+            default="Mvp"
+            help="The name of the SwipeRefreshLayout bean"/>
 
     <!-- Contract -->
     <parameter

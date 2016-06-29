@@ -1,11 +1,12 @@
 package ${packageName}.view;
 
-import ${superClassFqcn};
 import android.os.Bundle;
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.content.Intent;
 import android.view.View;
 
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import ${packageName}.contract.${contractClass};
 import ${packageName}.presenter.${presenterClass};
 import ${packageName}.adapter.${adapterClass};
@@ -14,13 +15,9 @@ import ${packageName}.extend.LoadMoreSwipeRefreshLayout;
 
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+public class ${activityClass} extends RxAppCompatActivity implements ${contractClass}.View, ${adapterClass}.OnItemClickListener {
 
-public class ${activityClass} extends ${superClass} implements ${contractClass}.View, ${adapterClass}.OnItemClickListener {
-
-    @Bind(R.id.refresh_layout)
-    LoadMoreSwipeRefreshLayout refreshLayout;
+    private ${activityClass}Binding binding;
 
     private ${contractClass}.Presenter presenter;
 
@@ -37,9 +34,7 @@ public class ${activityClass} extends ${superClass} implements ${contractClass}.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO: 修改布局文件中SwipeRefreshLayout的包名
-        setContentView(R.layout.${layoutName});
-        ButterKnife.bind(this);
+        binding = DataBindingUtil.setContentView(this, R.layout.${layoutName});
 
         initView();
         initData();
@@ -50,9 +45,9 @@ public class ${activityClass} extends ${superClass} implements ${contractClass}.
         adapter = new ${adapterClass}(${activityClass}.this, null);
         adapter.setOnItemClickListener(this);
 
-        refreshLayout.setAdapter(adapter);
-        refreshLayout.setCanLoadMore(false);
-        refreshLayout.setOnSwipeListener(new LoadMoreSwipeRefreshLayout.OnSwipeListener() {
+        binding.refreshLayout.setAdapter(adapter);
+        binding.refreshLayout.setCanLoadMore(false);
+        binding.refreshLayout.setOnSwipeListener(new LoadMoreSwipeRefreshLayout.OnSwipeListener() {
             @Override
             public void onRefresh() {
                 index = 1;
@@ -69,8 +64,8 @@ public class ${activityClass} extends ${superClass} implements ${contractClass}.
     }
 
     private void initData(){
-        presenter = new ${presenterClass}(this);
-        refreshLayout.reload();
+        presenter = new ${presenterClass}(this, this);
+        binding.refreshLayout.reload();
     }
 
     @Override
@@ -82,21 +77,21 @@ public class ${activityClass} extends ${superClass} implements ${contractClass}.
         if (success) {
 
             if (items.size() < size) {
-                refreshLayout.setCanLoadMore(false);
+                binding.refreshLayout.setCanLoadMore(false);
             } else {
                 index++;
-                refreshLayout.setCanLoadMore(true);
+                binding.refreshLayout.setCanLoadMore(true);
             }
 
-            if (refreshLayout.isRefreshing()) {
+            if (binding.refreshLayout.isRefreshing()) {
                 adapter.updateSource(items);
             } else {
                 adapter.addData(items);
             }
 
         }
-        refreshLayout.onRefreshComplete();
-        refreshLayout.onLoadComplete();
+        binding.refreshLayout.onRefreshComplete();
+        binding.refreshLayout.onLoadComplete();
       }
 
 

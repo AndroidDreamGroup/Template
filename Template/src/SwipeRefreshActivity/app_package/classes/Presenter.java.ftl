@@ -1,12 +1,15 @@
 package ${packageName}.presenter;
 
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import ${packageName}.contract.${contractClass};
 
-public class ${presenterClass} extends BasePresenter implements ${contractClass}.Presenter{
+public class ${presenterClass} implements ${contractClass}.Presenter{
 
+    private RxAppCompatActivity context;
     private ${contractClass}.View view;
 
-    public ${presenterClass}(${contractClass}.View view) {
+    public ${presenterClass}(RxAppCompatActivity context, ${contractClass}.View view) {
+        this.context = context;
         this.view = view;
     }
 

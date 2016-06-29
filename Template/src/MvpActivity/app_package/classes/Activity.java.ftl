@@ -1,14 +1,17 @@
 package ${packageName}.view;
 
-import ${superClassFqcn};
 import android.os.Bundle;
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import ${packageName}.contract.${contractClass};
 import ${packageName}.presenter.${presenterClass};
 
-public class ${activityClass} extends ${superClass} implements ${contractClass}.View {
+public class ${activityClass} extends RxAppCompatActivity implements ${contractClass}.View {
+
+    private ${activityClass}Binding binding;
 
     private ${contractClass}.Presenter presenter;
 
@@ -21,7 +24,7 @@ public class ${activityClass} extends ${superClass} implements ${contractClass}.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.${layoutName});
+        binding = DataBindingUtil.setContentView(this, R.layout.${layoutName});
 
         initView();
         initData();
@@ -33,7 +36,7 @@ public class ${activityClass} extends ${superClass} implements ${contractClass}.
     }
 
     private void initData(){
-        presenter = new ${presenterClass}(this);
+        presenter = new ${presenterClass}(this, this);
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.databinding.DataBindingUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +40,7 @@ public class ${adapterClass} extends RecyclerView.Adapter<${adapterClass}.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        ${beanClass} entity = mDataSource.get(position);
-        // TODO: 为holder中的控件赋值
+        holder.bind(mDataSource.get(position));
     }
 
     @Override
@@ -50,18 +50,23 @@ public class ${adapterClass} extends RecyclerView.Adapter<${adapterClass}.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        private ${activityClass}AdapterBinding binding;
+
         public ViewHolder(View view) {
             super(view);
-            // TODO: 添加控件，并初始化
-
-            view.setOnClickListener(this);
+            binding = DataBindingUtil.bind(view);
+            binding.setClick(this);
         }
 
         @Override
         public void onClick(View v) {
             if (mItemClickListener != null) {
-                mItemClickListener.onItemClick(v, mDataSource.get(getPosition()));
+                mItemClickListener.onItemClick(v, mDataSource.get(getLayoutPosition()));
             }
+        }
+
+        public void bind(${beanClass} entity){
+            binding.setEntity(entity);
         }
 
     }

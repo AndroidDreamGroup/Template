@@ -7,7 +7,7 @@
         minBuildApi="14"
         description="Creates a new mvp activity">
 
-    <category value="MVP"/>
+    <category value="Activity"/>
     <formfactor value="Mobile"/>
 
     <parameter
@@ -20,10 +20,17 @@
             help="The name of the activity class to create"/>
 
     <parameter
+            id="generateLayout"
+            name="Generate Layout File"
+            type="boolean"
+            default="true"
+            help="If true, a layout file will be generated" />
+
+    <parameter
             id="layoutName"
             name="Layout Name"
             type="string"
-            constraints="layout|unique|nonempty"
+            constraints="nonempty"
             suggest="${activityToLayout(activityClass)}"
             default="activity_mvp"
             help="The name of the layout to create for the activity"/>

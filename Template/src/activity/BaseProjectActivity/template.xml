@@ -2,13 +2,15 @@
 <template
         format="5"
         revision="5"
-        name="Swipe Refresh Activity"
+        name="Project Base Activity"
         minApi="7"
         minBuildApi="14"
-        description="Creates a new mvp activity that can refresh and load more ">
+        description="创建项目基础文件">
 
     <category value="Activity"/>
     <formfactor value="Mobile"/>
+
+    <!--Create Mvp Activity-->
 
     <parameter
             id="activityClass"
@@ -16,7 +18,7 @@
             type="string"
             constraints="class|unique|nonempty"
             suggest="${layoutToActivity(layoutName)}"
-            default="MvpActivity"
+            default="MainActivity"
             help="The name of the activity class to create"/>
 
     <parameter
@@ -25,7 +27,7 @@
             type="string"
             constraints="layout|unique|nonempty"
             suggest="${activityToLayout(activityClass)}"
-            default="activity_mvp"
+            default="activity_main"
             help="The name of the layout to create for the activity"/>
 
     <parameter
@@ -42,34 +44,6 @@
             constraints="package"
             default="com.xg.mvp"/>
 
-    <!-- SwipeRefreshLayout -->
-    <parameter
-            id="listItemLayout"
-            name="Layout Name"
-            type="string"
-            constraints="layout|unique|nonempty"
-            suggest="listitem_${activityToLayout(activityClass)}"
-            default="listitem_mvp"
-            help="The name of the layout to create for the SwipeRefreshLayout"/>
-
-    <parameter
-            id="adapterClass"
-            name="Adapter Name"
-            type="string"
-            constraints="class|unique|nonempty"
-            suggest="${underscoreToCamelCase(classToResource(activityClass))}Adapter"
-            default="MvpAdapter"
-            help="The name of the SwipeRefreshLayout adapter"/>
-
-    <parameter
-            id="beanClass"
-            name="Refresh Layout Bean Name"
-            type="string"
-            constraints="class|unique|nonempty"
-            suggest="${underscoreToCamelCase(classToResource(activityClass))}"
-            default="Mvp"
-            help="The name of the SwipeRefreshLayout bean"/>
-
     <!-- Contract -->
     <parameter
             id="contractClass"
@@ -77,7 +51,7 @@
             type="string"
             constraints="class|unique|nonempty"
             suggest="I${underscoreToCamelCase(classToResource(activityClass))}Contract"
-            default="IMvpContract"
+            default="IMainContract"
             help="The name of the contract class to create"/>
 
     <!-- Presenter -->
@@ -87,8 +61,47 @@
             type="string"
             constraints="class|unique|nonempty"
             suggest="${underscoreToCamelCase(classToResource(activityClass))}Presenter"
-            default="MvpPresenter"
+            default="MainPresenter"
             help="The name of the presenter impl class to create"/>
+
+    <!--Create Application-->
+    <!--Create GreenDao-->
+    <parameter
+            id="hasGreenDao"
+            name="Import GreenDao"
+            type="boolean"
+            default="false"
+            help="If true, Generated Greendao Files"/>
+
+    <parameter
+            id="greenDaoName"
+            name="Database Name"
+            type="string"
+            constraints="nonempty"
+            default="Main"
+            visibility="hasGreenDao"
+            help="The name of database"/>
+
+    <!--Create Network Retrofit-->
+
+    <parameter
+            id="apiUrlDebug"
+            name="Api Debug Url"
+            type="string"
+            constraints="nonempty"
+            default="127.0.0.1:8080"
+            help="Api Debug Url"/>
+
+    <parameter
+            id="apiUrlRelease"
+            name="Api Release Url"
+            type="string"
+            constraints="nonempty"
+            default="127.0.0.1:8080"
+            help="Api Release Url"/>
+
+    <!--Create Utils-->
+
 
     <!-- 128x128 thumbnails relative to template.xml -->
     <thumbs>

@@ -2,11 +2,15 @@
 <recipe>
     <#include "../common/recipe_manifest.xml.ftl" />
 
+<#if generateLayout>
     <instantiate from="app_package/layout/layout.xml.ftl"
                          to="${escapeXmlAttribute(resOut)}/layout/${layoutName}.xml" />
+</#if>
 
+<#if generateItemLayout>
     <instantiate from="app_package/layout/listitem_layout.xml.ftl"
                          to="${escapeXmlAttribute(resOut)}/layout/${listItemLayout}.xml" />
+</#if>
 
     <instantiate from="app_package/classes/Activity.java.ftl"
                    to="${escapeXmlAttribute(srcOut)}/view/${activityClass}.java" />
